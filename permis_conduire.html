@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification de l'âge et du pays pour conduire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Vérification de l'âge et du pays pour conduire</h1>
+
+    <div class="container">
+        <label for="age">Votre âge :</label>
+        <input type="number" id="age" name="age" min="0" placeholder="Entrez votre âge">
+
+        <label for="pays">Votre pays :</label>
+        <select id="pays" name="pays">
+            <option value="france">France</option>
+            <option value="usa">États-Unis</option>
+            <option value="allemagne">Allemagne</option>
+            <option value="canada">Canada</option>
+            <option value="royaumeuni">Royaume-Uni</option>
+        </select>
+
+        <button onclick="verifierDroitDeConduire()">Vérifier</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function verifierDroitDeConduire() {
+            var age = document.getElementById("age").value;
+            var pays = document.getElementById("pays").value;
+            var result = document.getElementById("result");
+
+            if (age === "") {
+                result.innerHTML = "Veuillez entrer votre âge.";
+                return;
+            }
+
+            age = parseInt(age);
+
+            var ageMinimum = 18;
+
+            // Définir l'âge minimum en fonction du pays
+            if (pays === "usa") {
+                ageMinimum = 16;
+            } else if (pays === "royaumeuni") {
+                ageMinimum = 17;
+            } else if (pays === "allemagne") {
+                ageMinimum = 18;
+            } else if (pays === "canada") {
+                ageMinimum = 16;
+            }
+
+            if (age >= ageMinimum) {
+                result.innerHTML = "Vous avez le droit de conduire en " + capitalizeFirstLetter(pays) + ".";
+                result.style.color = "green";
+            } else {
+                result.innerHTML = "Désolé, vous n'avez pas encore l'âge légal pour conduire en " + capitalizeFirstLetter(pays) + ".";
+                result.style.color = "red";
+            }
+        }
+
+        function capitalizeFirstLetter(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        }
+</script>
+</body>
+</html>
